@@ -1,34 +1,23 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
 import './App.css'
+import ChatBot from './components/Chart'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const chatbotConfig = {
+    borderColor: '#000',
+    borderRadius: '10px',
+    titleBgColor: '#0078d7',
+    botBubbleBg: '#f1f1f1',
+    botTextColor: '#000',
+    userBubbleBg: '#0078d7',
+    userTextColor: '#fff',
+    font: 'Arial, sans-serif',
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+   <div>
+    <ChatBot config={chatbotConfig}/>
+ </div>
   )
 }
 

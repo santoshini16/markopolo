@@ -1,6 +1,8 @@
 
 import './App.css'
 import ChatBot from './components/Chart'
+import {BrowserRouter,Routes,Route} from 'react-router-dom';
+import Home from './pages/Home';
 
 function App() {
   const chatbotConfig = {
@@ -16,7 +18,12 @@ function App() {
 
   return (
    <div>
-    <ChatBot config={chatbotConfig}/>
+    <BrowserRouter>
+      <Routes>
+         <Route path='/' element={<Home/>}></Route>
+      </Routes>
+    </BrowserRouter>
+    {/* <ChatBot config={chatbotConfig}/> */}
  </div>
   )
 }

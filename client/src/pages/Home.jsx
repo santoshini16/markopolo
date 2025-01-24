@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './Home.module.css'
-
+import { TypeAnimation } from 'react-type-animation';
 
 const Home = () => {
   return (
@@ -18,6 +18,26 @@ const Home = () => {
             <div className={styles.bg}></div>
           </div>
           <img src="/bot.png" alt="" className={styles.bot} />
+          <div className={styles.chat}>
+            <img src="/bot.png" alt="" />
+          <TypeAnimation
+              sequence={[
+                // Same substring at the start will only be typed out once, initially
+                'Human:We produce food for Mice',
+                1000, // wait 1s before replacing "Mice" with "Hamsters"
+                'Bot:We produce food for Hamsters',
+                1000,
+                'Human2:We produce food for Guinea Pigs',
+                1000,
+                'Bot:We produce food for Chinchillas',
+                1000
+              ]}
+              wrapper="span"
+              repeat={Infinity}
+              cursor={true}
+              omitDeletionAnimation={true}
+            />
+          </div>
         </div>
       </div>
     </div>

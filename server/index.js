@@ -2,6 +2,8 @@ const express = require('express');
 const { mongoose } = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv').config();
+const errorHandler = require("./middleware/errorHandler");
+const chatbotRoutes = require("./routes/chatbotRoutes");
 const app = express();
 const PORT = 3000;
 
@@ -28,6 +30,8 @@ mongoose.connect(process.env.MONGO_URL)
     .catch((error) => {
         console.log('Failed to connect to MongoDB:', error);
     });
+    app.use("/api", chatbotRoutes);
+    app.use(errorHandler);
 
 // Start server
 app.listen(PORT, () => {

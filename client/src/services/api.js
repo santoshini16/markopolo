@@ -24,3 +24,14 @@ export const uploadDocument = async (file) => {
   }
 };
 
+export const queryChatbot = async (query) => {
+  console.log(query)
+  try {
+    const response = await axios.post(`${API_BASE_URL}/api/query`, { query });
+
+    return response.data; 
+  } catch (error) {
+    console.error("Error querying chatbot:", error);
+    throw error;
+  }
+};

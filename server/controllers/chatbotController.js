@@ -26,6 +26,7 @@ const uploadFile = async (req, res) => {
 const queryChatbot = async (req, res) => {
   try {
     const { query } = req.body;
+    console.log(query)
     const queryEmbedding = await generateEmbedding([query]);
 
     const results = await findSimilarEmbeddings(queryEmbedding[0]);

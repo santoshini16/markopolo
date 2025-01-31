@@ -1,5 +1,6 @@
-import React from 'react';
-import styles from './Chart.module.css';
+import React, { useState } from "react";
+import styles from "./Chart.module.css";
+import { queryChatbot } from "../services/api";
 
 const ChatBot = ({ config }) => {
   const {
@@ -13,6 +14,40 @@ const ChatBot = ({ config }) => {
     font,
   } = config;
 
+  const [messages, setMessages] = useState([
+    { sender: "bot", text: "Hello! Ask me anything about the document." },
+  ]);
+  const [query, setQuery] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  // Handle User Query Submission
+  const handleSendMessage = async () => {
+    if (!query.trim()) return;
+
+    const userMessage = { sender: "user", text: query };
+    setMessages([...messages, userMessage]);
+
+    setQuery("");
+    setLoading(true);
+
+    try {
+      const botResponses = await queryChatbot(query);
+
+      console.log(botResponses)
+      
+      // Pick the most relevant response
+      const botMessage = botResponses.length > 0 
+        ? botResponses[0].text 
+        : "I couldn't find relevant information in the document.";
+
+      setMessages((prevMessages) => [...prevMessages, { sender: "bot", text: botMessage }]);
+    } catch (error) {
+      setMessages([...messages, { sender: "bot", text: "Error processing your query. Try again!" }]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div
       className={styles.chatbot}
@@ -22,47 +57,33 @@ const ChatBot = ({ config }) => {
         fontFamily: font,
       }}
     >
-      <div
-        className={styles.title}
-        style={{
-          backgroundColor: titleBgColor,
-        }}
-      >
-        <div className={styles.buttonIcon}></div>
+      <div className={styles.title} style={{ backgroundColor: titleBgColor }}>
         <span>Jinn Live - Demo Bot</span>
       </div>
 
       <div className={styles.chatArea}>
-        <div className={styles.botMessage}>
-          <div className={styles.buttonIcon}></div>
-          <span
+        {messages.map((msg, index) => (
+          <div key={index} className={msg.sender === "bot" ? styles.botMessage : styles.userMessage}
             style={{
-              backgroundColor: botBubbleBg,
-              color: botTextColor,
+              backgroundColor: msg.sender === "bot" ? botBubbleBg : userBubbleBg,
+              color: msg.sender === "bot" ? botTextColor : userTextColor,
             }}
           >
-            Hello! How can I assist you today?
-          </span>
-        </div>
-        <div
-          className={styles.userMessage}
-          style={{
-            backgroundColor: userBubbleBg,
-            color: userTextColor,
-          }}
-        >
-          I need some help.
-        </div>
+            {msg.text}
+          </div>
+        ))}
       </div>
 
       <div className={styles.inputArea}>
         <input
           type="text"
-          placeholder="Ask us anything..."
+          placeholder="Ask me about the document..."
           className={styles.input}
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
         />
-        <button className={styles.sendButton}>
-        ➤
+        <button className={styles.sendButton} onClick={handleSendMessage} disabled={loading}>
+          {loading ? "..." : "➤"}
         </button>
       </div>
     </div>

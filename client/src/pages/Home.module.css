@@ -204,3 +204,35 @@
     }
 }
 
+.fileInput {
+    margin-top: 10px;
+  }
+  
+  .uploadButton {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    pointer-events: auto !important;
+    z-index: 1000 !important;
+  }
+  
+  .uploadLabel{
+    cursor: pointer;
+    margin-top: 10px;
+    pointer-events: auto !important;
+    z-index: 1000 !important;
+  }
+  .uploadButton:hover {
+    background-color: #0056b3;
+  }
+  
+  .uploadStatus {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+  }
+  
